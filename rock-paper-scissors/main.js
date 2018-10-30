@@ -9,9 +9,26 @@ content.innerHTML = renderGame(rockPaperScissors);
 // ----------------------------------------------------------------------------
 
 // function to randomly generate computer choice
-let randomChoice = null
+function computerChoice () {
+    let randomChoice = null
+    let computerPlay = null
 randomChoice = Math.floor(Math.random() * 3)
-console.log('random choice is:' + randomChoice)
+
+if (randomChoice === 0) {
+    computerPlay = 'Rock'
+}  else {
+    if (randomChoice === 1) {
+        computerPlay = 'Paper'
+    }
+    else 
+    computerPlay = 'Scissors'
+}
+
+console.log('random choice is: ' + computerPlay)
+}
+
+computerChoice()
+
 
 // function to compare user's choice wiht computer and determine win/lose
 
