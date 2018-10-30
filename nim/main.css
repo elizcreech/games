@@ -1,11 +1,16 @@
 .pebble {
     width: 20px;
     height: 20px;
-    border-radius: 20px;
+    border-radius: 60px;
     background-color: #999999;
     display: inline-block;
 }
 
 .pebble:first-child {
     background-color: #ffb600
+}
+
+#takeButton {
+    background-color: blue;
+    color: white
 }

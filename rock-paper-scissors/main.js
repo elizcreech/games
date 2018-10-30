@@ -4,8 +4,26 @@ var rockPaperScissors = "Replace this with your own abstraction of Rock Paper Sc
 
 content.innerHTML = renderGame(rockPaperScissors);
 
+// ----------------------------------------------------------------------------
+//   Game Logic
+// ----------------------------------------------------------------------------
 
+// function to randomly generate computer choice
+let randomChoice = null
+randomChoice = Math.floor(Math.random() * 3)
+console.log('random choice is:' + randomChoice)
 
+// function to compare user's choice wiht computer and determine win/lose
+
+// Optional function to keep score
+
+// ----------------------------------------------------------------------------
+//   Build HTML
+// ----------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------
+//   Render Game
+// ----------------------------------------------------------------------------
 
 function renderGame(game) {
     // Change this render function to use the "game" parameter
