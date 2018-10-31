@@ -14,11 +14,12 @@ const initialGameState = {
 
 let gameState = deepCopy(initialGameState)
 
-let theGame = deepCopy(gameState)
+//let theGame = deepCopy(gameState)
 
 function resetGame () {
-    theGame = deepCopy(initialGameState)
-    console.log('Resetting the Game!')
+    gameState = deepCopy(initialGameState)
+    //theGame = deepCopy(initialGameState)
+    console.log('Resetting the Game!' + gameState.winner)
     renderGame()
   }
 
@@ -26,15 +27,21 @@ function resetGame () {
 // Game State + Logic
 // -----------------------------------------------------------------------------
 function onTake () {
-    var takePebbles = document.getElementById('takeInput')
-    gameState.NumOfPebbles = gameState.NumOfPebbles - takePebbles.value
-    console.log('You took ' + takePebbles.value + ' Pebbles')   
-    checkWinnerState()  
+    if (gameState.winner != null) {
+        resetGame()
+        init()
+    }  else {
+        var takePebbles = document.getElementById('takeInput')
+        gameState.NumOfPebbles = gameState.NumOfPebbles - takePebbles.value
+        console.log('You took ' + takePebbles.value + ' Pebbles')   
+        checkWinnerState()
+    }
+      
 }
 
 function checkWinnerState () {
-    console.log('Winner set to ' + gameState.winner)
-  if (gameState.NumOfPebbles === 1) {
+    
+  if ((gameState.NumOfPebbles === 1) || (gameState.NumOfPebbles === 0)) {
       console.log('Made to only ONE pebble')
       gameState.winner = gameState.playerTurn
       buildWinnerMsg()
@@ -46,9 +53,9 @@ function checkWinnerState () {
     else {
         gameState.playerTurn = 1
     } }
-    init()
-  
-    console.log('it is Player ' + gameState.playerTurn + 's Turn!') 
+    console.log('Winner set to ' + gameState.winner)
+    console.log('it is Player ' + gameState.playerTurn + 's Turn!')
+    init()   
 }
 
 // -----------------------------------------------------------------------------
@@ -60,14 +67,16 @@ function buildPebblesLeftMsg () {
     return '<h4>There are ' + gameState.NumOfPebbles + ' pebbles left</h4>'
 }
 
-// function buildPebbleGraphic (NumOfPebbles) {
-//    // let pebbleContainerHTML = '<div class="w-50 text-center pebble-container">'
-//     let pebblePartHTML = '<div class="pebble"></div>'
-//     for (let i = 1; i = NumOfPebbles-1; i++) {
-//         pebblePartHTML = pebblePartHTML + '<div> class="pebble"></div>'
-//     }
-//     return PebblePartHTML
-// }
+function buildPebbleGraphic () {
+    var pebCount = gameState.NumOfPebbles
+    let pebblePartHTML = '<div class="w-50 text-center pebble-container">'
+        pebblePartHTML += '<div class="pebble"></div>'
+    for (let i = 1; i < pebCount; i++) {
+        pebblePartHTML += '<div class="pebble"></div>'
+    }
+    pebblePartHTML += '</div>'
+    return pebblePartHTML   
+}
 
 function buildPlayerTurnMsg () {
     return '<h4>It is player ' + gameState.playerTurn + 's turn! How many pebbles will you take?</h4>'
@@ -98,14 +107,15 @@ function buildTakebutton () {
     return  '<button id="takeButton">Take</button>'
 }
 
-
 function buildGame (game) {
     console.log('got to buildGame function')
     let html = '<div class="container d-flex flex-column justify-content-start align-items-center">'
     if (gameState.winner != null) {
         console.log('Player ' + gameState.winner + ' WINS! There are ' + gameState.NumOfPebbles + ' Pebbles Left')
         html += buildWinnerMsg(gameState)
+        html += buildTakebutton(gameState)
     } else {
+        html += buildPebbleGraphic(gameState)
         html += buildPebblesLeftMsg(gameState)
         html += buildPlayerTurnMsg(gameState)
         html += buildQtySelector(gameState)
